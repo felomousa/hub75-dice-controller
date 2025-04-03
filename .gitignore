@@ -1,0 +1,23 @@
+# quartus generated files
+db/
+incremental_db/
+output_files/
+.vscode/
+
+# project setup
+*.qpf
+*.qsf.bak
+
+# backups
+*.bak
+
+# system files
+.DS_Store
+Thumbs.db
+
+# temporary files
+*.tmp
+*.log
+*.rpt
+*.sdc
+*.summary

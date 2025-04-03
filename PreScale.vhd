@@ -1,14 +1,11 @@
--- Felo Mousa - 301586676; Nolan Gola - 301581563; 
--- ENSC 252 || 2024 Fall Semester --
--- BONUS PROJECT --
-
+-- Felo Mousa - 301586676; Nolan Gola - 301581563; Wasim Mahmood - 301583857;
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 ENTITY PreScale IS
 	PORT (
 		OutClock : OUT std_logic;
-		InClock, enable : IN std_logic;
+		InClock : IN std_logic;
 		ScaleBy : IN INTEGER);
 END ENTITY;
 

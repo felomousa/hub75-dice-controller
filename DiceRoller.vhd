@@ -2,62 +2,61 @@
 -- ENSC 252 || 2024 Fall Semester --
 -- BONUS PROJECT --
 
--- Implements a dice roller FSM cycling through states ONE to SIX.
--- On each clock edge, if isRolling is high, the state advances; otherwise it holds.
--- Each state drives a corresponding value on 7-Seg.
+-- cycles through 6 dice face states (1–6) when enable is high on clock edge;
+-- outputs current face as 3-bit faceState
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 ENTITY DiceRoller IS
 	PORT (
-	clock, isRolling : in std_logic;
-	Seg: out std_logic_Vector(2 downto 0)
+	clock, enable : in std_logic;
+	faceState: out std_logic_Vector(2 downto 0)
 	);
 END ENTITY;
 ARCHITECTURE Roller OF DiceRoller IS
-TYPE State_type IS (ONE, TWO, THREE, FOUR, FIVE, SIX);
+TYPE State_type IS (Face_One, Face_Two, Face_Three, Face_Four, Face_Five, Face_Six);
 Signal diceNow, diceNext: State_type;
 BEGIN
 
-PROCESS(isRolling, diceNow) -- IF isRolling, diceNext goes to dice++
+PROCESS(enable, diceNow) -- IF enable, diceNext goes to dice++
 BEGIN
 	case diceNow IS
-        WHEN ONE =>
-            IF isRolling = '1' THEN
-                diceNext <= TWO;
+        WHEN Face_One =>
+            IF enable = '1' THEN
+                diceNext <= Face_Two;
             ELSE
-                diceNext <= ONE;
+                diceNext <= Face_One;
             END IF;
-        WHEN TWO =>
-            IF isRolling = '1' THEN
-                diceNext <= THREE;
+        WHEN Face_Two =>
+            IF enable = '1' THEN
+                diceNext <= Face_Three;
             ELSE
-                diceNext <= TWO;
+                diceNext <= Face_Two;
             END IF;
-        WHEN THREE =>
-            IF isRolling = '1' THEN
-                diceNext <= FOUR;
+        WHEN Face_Three =>
+            IF enable = '1' THEN
+                diceNext <= Face_Four;
             ELSE
-                diceNext <= THREE;
+                diceNext <= Face_Three;
             END IF;
-        WHEN FOUR =>
-            IF isRolling = '1' THEN
-                diceNext <= FIVE;
+        WHEN Face_Four =>
+            IF enable = '1' THEN
+                diceNext <= Face_Five;
             ELSE
-                diceNext <= FOUR;
+                diceNext <= Face_Four;
             END IF;
-        WHEN FIVE =>
-            IF isRolling = '1' THEN
-                diceNext <= SIX;
+        WHEN Face_Five =>
+            IF enable = '1' THEN
+                diceNext <= Face_Six;
             ELSE
-                diceNext <= FIVE;
+                diceNext <= Face_Five;
             END IF;
-        WHEN SIX =>
-            IF isRolling = '1' THEN
-                diceNext <= ONE;
+        WHEN Face_Six =>
+            IF enable = '1' THEN
+                diceNext <= Face_One;
             ELSE
-                diceNext <= SIX;
+                diceNext <= Face_Six;
             END IF;
 	END CASE;
 END PROCESS;
@@ -73,23 +72,23 @@ PROCESS(diceNow)
 BEGIN
     CASE diceNow IS 
 
-        WHEN ONE =>
-        Seg <= "001"; -- 1
+        WHEN Face_One =>
+        faceState <= "001"; -- 1
 
-        WHEN TWO =>
-        Seg <= "010"; -- 2
+        WHEN Face_Two =>
+        faceState <= "010"; -- 2
 
-        WHEN THREE =>
-        Seg <= "011"; -- 3
+        WHEN Face_Three =>
+        faceState <= "011"; -- 3
 
-        WHEN FOUR =>
-        Seg <= "100"; -- 4
+        WHEN Face_Four =>
+        faceState <= "100"; -- 4
 
-        WHEN FIVE =>
-        Seg <= "101"; -- 5 
+        WHEN Face_Five =>
+        faceState <= "101"; -- 5 
 
-        WHEN SIX =>
-        Seg <= "110"; -- 6
+        WHEN Face_Six =>
+        faceState <= "110"; -- 6
 
     END CASE;
 END PROCESS;

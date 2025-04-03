@@ -15,7 +15,7 @@ use ieee.numeric_std.all;
 -- Outputs color signals and control signals via GPIO
 
 
-entity HUB75_Driver is
+entity HUB75_Controller is
     port (
         CLOCK_50 : in  std_logic;
         
@@ -33,7 +33,7 @@ entity HUB75_Driver is
     );
 end entity;
 
-architecture rtl of HUB75_Driver is
+architecture rtl of HUB75_Controller is
 
     constant ROWS : integer := 16;
     constant COLS : integer := 64;
